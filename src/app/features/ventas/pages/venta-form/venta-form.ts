@@ -52,8 +52,8 @@ export class VentaForm implements OnInit {
   }
   readonly buscarCliente = this.fb.control('');
   readonly buscarProducto = this.fb.control('');
-  private readonly textoCliente = toSignal(this.buscarCliente.valueChanges, { initialValue: '' });
-  private readonly textoProducto = toSignal(this.buscarProducto.valueChanges, { initialValue: '' });
+  readonly textoCliente = toSignal(this.buscarCliente.valueChanges, { initialValue: '' });
+  readonly textoProducto = toSignal(this.buscarProducto.valueChanges, { initialValue: '' });
   private readonly valores = toSignal(this.form.valueChanges, { initialValue: this.form.value });
   readonly clientesEncontrados = computed(() =>
     this.textoCliente().trim()
@@ -202,7 +202,6 @@ export class VentaForm implements OnInit {
         this.guardando.set(false);
         this.confirmando.set(false);
         this.error.set(mensajeError(e));
-        // Mantener el detalle, pero actualizar el stock que otra caja pudo consumir.
         this.productoService
           .listar()
           .subscribe({ next: (p) => this.productos.set(p), error: () => {} });

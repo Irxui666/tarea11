@@ -1,6 +1,6 @@
 export interface VentaPorCategoria {
   categoriaId: number;
-  nombreCategoria: string;
-  cantidadTotal: number;
+  categoriaNombre: string;
+  cantidadVendida: number;
   montoTotal: number;
 }

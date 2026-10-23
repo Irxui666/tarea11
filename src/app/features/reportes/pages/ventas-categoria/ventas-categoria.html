@@ -10,7 +10,7 @@
   ><label>Hasta<input type="date" class="input" formControlName="hasta" /></label>
   <div class="actions">
     <button type="button" class="btn" (click)="limpiar()">Limpiar</button
-    ><button class="btn btn-primary">Consultar</button>
+    ><button class="btn btn-primary">Generar</button>
   </div>
 </form>
 @if (error()) {
@@ -28,18 +28,20 @@
           <th>Categoría</th>
           <th>Unidades vendidas</th>
           <th>Monto vendido</th>
+          <th>Comparación</th>
         </tr>
       </thead>
       <tbody>
         @for (f of filas(); track f.categoriaId) {
           <tr>
-            <td>{{ f.nombreCategoria }}</td>
-            <td>{{ f.cantidadTotal }}</td>
+            <td>{{ f.categoriaNombre }}</td>
+            <td>{{ f.cantidadVendida }}</td>
             <td class="monto">{{ f.montoTotal | currency: 'PEN' : 'S/ ' }}</td>
+            <td class="comparacion"><div class="barra-fondo"><div class="barra" [style.width.%]="porcentaje(f.montoTotal)"></div></div><span>{{ porcentaje(f.montoTotal).toFixed(1) }} %</span></td>
           </tr>
         } @empty {
           <tr>
-            <td colspan="3">No hay ventas registradas en ese período.</td>
+            <td colspan="4">No hay ventas en el periodo seleccionado</td>
           </tr>
         }
       </tbody>
@@ -50,6 +52,7 @@
           <td class="monto">
             <strong>{{ total() | currency: 'PEN' : 'S/ ' }}</strong>
           </td>
+          <td></td>
         </tr>
       </tfoot>
     </table>

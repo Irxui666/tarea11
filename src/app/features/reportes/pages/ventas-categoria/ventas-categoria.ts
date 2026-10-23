@@ -7,9 +7,10 @@ import { VentaPorCategoria } from '../../models/reporte.model';
 import { mensajeError } from '../../../../core/utils/http-error';
 import { redondear } from '../../../../core/utils/numeros';
 @Component({
-  selector: 'app-reporte-categorias',
+  selector: 'app-ventas-categoria',
   imports: [ReactiveFormsModule, CurrencyPipe, DatePipe],
-  templateUrl: './reporte-categorias.html',
+  templateUrl: './ventas-categoria.html',
+  styleUrl: './ventas-categoria.css',
 })
 export class ReporteCategorias implements OnInit, OnDestroy {
   private readonly service = inject(ReporteService);
@@ -23,7 +24,9 @@ export class ReporteCategorias implements OnInit, OnDestroy {
   readonly periodo = signal('Todas las fechas');
   readonly ahora = signal(new Date());
   readonly total = computed(() => redondear(this.filas().reduce((s, f) => s + f.montoTotal, 0)));
-  readonly unidades = computed(() => this.filas().reduce((s, f) => s + f.cantidadTotal, 0));
+  readonly unidades = computed(() => this.filas().reduce((s, f) => s + f.cantidadVendida, 0));
+  readonly mayorMonto = computed(() => Math.max(0, ...this.filas().map(f => f.montoTotal)));
+  porcentaje(monto: number): number { return this.mayorMonto() > 0 ? monto / this.mayorMonto() * 100 : 0; }
   ngOnInit() {
     this.buscar();
   }

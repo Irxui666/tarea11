@@ -44,11 +44,7 @@ export const routes: Routes = [
       {
         path: 'reportes',
         canActivate: [permisoGuard], data: { permiso: 'REPORTES_VER' },
-        title: 'Ventas por categoría',
-        loadComponent: () =>
-          import('./features/reportes/pages/reporte-categorias/reporte-categorias').then(
-            (m) => m.ReporteCategorias,
-          ),
+        loadChildren: () => import('./features/reportes/reportes.routes').then(m => m.REPORTES_ROUTES),
       },
     ],
   },

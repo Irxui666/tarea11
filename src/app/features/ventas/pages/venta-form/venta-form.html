@@ -35,7 +35,7 @@
           placeholder="Nombre, apellido o DNI"
           (keydown.enter)="$event.preventDefault()"
       /></label>
-      @if (buscarCliente.value.trim()) {
+      @if (textoCliente().trim()) {
         <ul class="resultados">
           @for (c of clientesEncontrados(); track c.id) {
             <li>
@@ -61,7 +61,7 @@
         placeholder="Nombre o categoría; Enter agrega el primero"
         (keydown.enter)="agregarPrimero($event)"
     /></label>
-    @if (buscarProducto.value.trim()) {
+    @if (textoProducto().trim()) {
       <ul class="resultados">
         @for (p of productosEncontrados(); track p.id) {
           <li>

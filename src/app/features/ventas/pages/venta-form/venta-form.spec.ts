@@ -39,7 +39,7 @@ describe('VentaForm', () => {
     c = fixture.componentInstance;
     http = TestBed.inject(HttpTestingController);
     fixture.detectChanges();
-    http.expectOne('/api/v1/clientes').flush([cliente, { ...cliente, id: 2, estado: false }]);
+    http.expectOne('/api/v1/clientes').flush([cliente, { ...cliente, id: 2, dni: '87654321', estado: false }]);
     http
       .expectOne('/api/v1/productos')
       .flush([
@@ -58,6 +58,8 @@ describe('VentaForm', () => {
     http.expectNone('/api/v1/ventas');
   });
   it('busca por palabras sin tildes y excluye clientes inactivos', () => {
+    c.buscarCliente.setValue('87654321');
+    expect(c.clientesEncontrados()).toEqual([]);
     c.buscarCliente.setValue('huaman');
     expect(c.clientesEncontrados().map((x) => x.id)).toEqual([1]);
     c.buscarCliente.setValue('zzzz');
@@ -140,4 +142,13 @@ describe('VentaForm', () => {
     expect(c.detalles.length).toBe(1);
     expect(c.lineas()[0].excedeStock).toBe(true);
   });
+  it('C-01 | 12.50 x 3 = 37.50', () => { c.agregarProducto(producto); c.detalles.at(0).controls.cantidad.setValue(3); expect(c.total()).toBe(37.50); });
+  it('C-02 | 18.90 x 3 = 56.70', () => { const p={...producto,precio:18.9};c.productos.set([p]); c.agregarProducto(p); c.detalles.at(0).controls.cantidad.setValue(3); expect(c.total()).toBe(56.70); fixture.detectChanges(); expect(fixture.nativeElement.textContent).toContain('56.70'); });
+  it('C-03 | tres lineas y quitar medio = 26.10', () => { const ps=[producto,{...producto,id:2,precio:18.9},{...producto,id:5,precio:1.1}]; c.productos.set(ps); ps.forEach(x=>c.agregarProducto(x)); c.detalles.at(0).controls.cantidad.setValue(2); expect(c.total()).toBe(45); c.quitarLinea(1); expect(c.total()).toBe(26.1); });
+  it('V-02 | rechaza 0 y 2.5', () => {c.elegirCliente(cliente);c.agregarProducto(producto);for(const n of [0,2.5]){c.detalles.at(0).controls.cantidad.setValue(n);c.revisar();expect(c.confirmando()).toBe(false);expect(c.detalles.invalid).toBe(true);}});
+  it('V-03 | stock 2 rechaza cantidad 3', () => {const p={...producto,stock:2};c.productos.set([p]);c.elegirCliente(cliente);c.agregarProducto(p);c.detalles.at(0).controls.cantidad.setValue(3);c.revisar();expect(c.confirmando()).toBe(false);expect(c.lineas()[0].excedeStock).toBe(true);});
+  it('P-01 Buscadores | texto inexistente muestra aviso', async () => {c.buscarCliente.setValue('zzzz');expect(c.clientesEncontrados()).toEqual([]);await fixture.whenStable();fixture.detectChanges();expect(fixture.nativeElement.textContent).toContain('Ningún cliente activo');});
+  it('P-02 Validaciones | cantidad negativa no registra', () => {c.elegirCliente(cliente);c.agregarProducto(producto);c.detalles.at(0).controls.cantidad.setValue(-1);c.revisar();expect(c.confirmando()).toBe(false);http.expectNone('/api/v1/ventas');});
+  it('P-03 Confirmacion | confirmar sin revisar no envia POST', () => {c.elegirCliente(cliente);c.agregarProducto(producto);c.confirmar();http.expectNone('/api/v1/ventas');});
+
 });
