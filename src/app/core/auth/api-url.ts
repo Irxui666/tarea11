@@ -1,6 +1,5 @@
 import { environment } from '../../../environments/environment';
 
-/** Compara origen y límite del path para no filtrar el token a otros servidores. */
 export function esApi(url: string): boolean {
   const destino = new URL(url, location.origin);
   const api = new URL(environment.apiUrl, location.origin);

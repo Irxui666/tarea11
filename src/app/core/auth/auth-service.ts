@@ -84,7 +84,7 @@ export class AuthService {
       if (!texto) return null;
       const sesion: unknown = JSON.parse(texto);
       if (this.valida(sesion)) return sesion;
-    } catch { /* Una sesión dañada se descarta. */ }
+    } catch {}
     sessionStorage.removeItem(CLAVE_SESION);
     return null;
   }
