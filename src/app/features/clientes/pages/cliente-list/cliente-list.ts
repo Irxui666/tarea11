@@ -1,10 +1,11 @@
+import { SiPermiso } from '../../../../shared/directives/si-permiso';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ClienteService } from '../../services/cliente-service';
 import { Cliente } from '../../models/cliente.model';
 import { mensajeError } from '../../../../core/utils/http-error';
 
-@Component({ selector: 'app-cliente-list', imports: [RouterLink], templateUrl: './cliente-list.html' })
+@Component({ selector: 'app-cliente-list', imports: [SiPermiso, RouterLink], templateUrl: './cliente-list.html' })
 export class ClienteList implements OnInit {
   private readonly service = inject(ClienteService);
   private readonly route = inject(ActivatedRoute);

@@ -2,7 +2,7 @@
   <h2>Productos</h2>
   <div class="actions">
     <button class="btn" (click)="cargar()" [disabled]="cargando()">Actualizar stock</button
-    ><a class="btn btn-primary" routerLink="nuevo">Nuevo producto</a>
+    ><a class="btn btn-primary" *appSiPermiso="'CATALOGO_ESCRIBIR'" routerLink="nuevo">Nuevo producto</a>
   </div>
 </div>
 @if (error()) {
@@ -29,7 +29,7 @@
           <th>Precio</th>
           <th>Stock</th>
           <th>Estado</th>
-          <th>Acciones</th>
+          <th *appSiPermiso="'CATALOGO_ESCRIBIR'">Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -44,7 +44,7 @@
                 p.estado ? 'Activo' : 'Inactivo'
               }}</span>
             </td>
-            <td>
+            <td *appSiPermiso="'CATALOGO_ESCRIBIR'">
               <div class="actions">
                 <a class="btn" [routerLink]="[p.id, 'editar']">Editar</a
                 ><button class="btn btn-peligro" (click)="eliminar(p)" [disabled]="eliminando()">

@@ -15,5 +15,12 @@
     <a href="http://localhost:8080/swagger-ui.html" target="_blank" rel="noopener">API</a>
   </nav>
 
-  <span class="usuario">Invitado</span>
+  @if (auth.sesion(); as s) {
+    <div class="usuario"><a routerLink="/mi-cuenta">{{ s.nombreCompleto }}</a>
+      <small>{{ s.roles.join(' · ') }} · expira {{ s.expiraEn | date: 'HH:mm' }}</small></div>
+    <button class="btn-salir" (click)="auth.cerrarSesion()">Cerrar sesión</button>
+  }
 </header>
+@if (auth.porVencer()) {
+  <div class="aviso-sesion" role="alert">Su sesión vencerá en menos de un minuto. Guarde su trabajo; deberá iniciar sesión nuevamente.</div>
+}

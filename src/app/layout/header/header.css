@@ -47,3 +47,7 @@
   font-size: 14px;
   opacity: 0.85;
 }
+.usuario { margin-left: auto; display: flex; flex-direction: column; align-items: flex-end; }
+.usuario a { color: inherit; } .usuario small { color: #cadcfc; }
+.btn-salir { padding: 6px 12px; border: 1px solid #cadcfc; border-radius: 8px; background: none; color: white; cursor: pointer; }
+.aviso-sesion { padding: 12px; background: #fff6dc; color: #7a5200; }

@@ -7,7 +7,7 @@
       [disabled]="!resultado()?.contenido?.length || cargando()"
     >
       Imprimir consulta</button
-    ><a class="btn btn-primary" routerLink="nueva">Nueva venta</a>
+    ><a class="btn btn-primary" *appSiPermiso="'VENTAS_REGISTRAR'" routerLink="nueva">Nueva venta</a>
   </div>
 </div>
 <p class="solo-impresion">

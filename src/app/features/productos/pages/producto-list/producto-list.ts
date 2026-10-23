@@ -1,3 +1,4 @@
+import { SiPermiso } from '../../../../shared/directives/si-permiso';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -7,7 +8,7 @@ import { mensajeError } from '../../../../core/utils/http-error';
 import { coincide } from '../../../../core/utils/texto';
 @Component({
   selector: 'app-producto-list',
-  imports: [RouterLink, CurrencyPipe],
+  imports: [SiPermiso, RouterLink, CurrencyPipe],
   templateUrl: './producto-list.html',
 })
 export class ProductoList implements OnInit {

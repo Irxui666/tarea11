@@ -1,11 +1,11 @@
-<div class="page-header"><h2>Clientes</h2><a class="btn btn-primary" routerLink="nuevo">Nuevo cliente</a></div>
+<div class="page-header"><h2>Clientes</h2><a class="btn btn-primary" *appSiPermiso="'CLIENTES_ESCRIBIR'" routerLink="nuevo">Nuevo cliente</a></div>
 @if (error()) { <div class="alerta" role="alert">{{ error() }} <button class="btn" (click)="cargar()">Reintentar</button></div> }
 @if (exito()) { <div class="exito" role="status">{{ exito() }}</div> }
 <label class="search">Buscar por DNI, nombre o correo<input class="input" [value]="filtro()" (input)="filtro.set($any($event.target).value)" /></label>
 @if (cargando()) { <p role="status">Cargando clientes…</p> } @else {
-  <div class="table-wrap"><table class="tabla"><thead><tr><th>DNI</th><th>Nombres</th><th>Apellidos</th><th>Correo</th><th>Teléfono</th><th>Dirección</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>
+  <div class="table-wrap"><table class="tabla"><thead><tr><th>DNI</th><th>Nombres</th><th>Apellidos</th><th>Correo</th><th>Teléfono</th><th>Dirección</th><th>Estado</th><th *appSiPermiso="'CLIENTES_ESCRIBIR'">Acciones</th></tr></thead><tbody>
     @for (c of filtrados(); track c.id) {
-      <tr><td>{{ c.dni }}</td><td>{{ c.nombres }}</td><td>{{ c.apellidos }}</td><td>{{ c.email }}</td><td>{{ c.telefono ?? '—' }}</td><td>{{ c.direccion ?? '—' }}</td><td><span class="badge" [class.inactivo]="!c.estado">{{ c.estado ? 'Activo' : 'Inactivo' }}</span></td><td class="actions"><a class="btn" [routerLink]="[c.id, 'editar']">Editar</a><button class="btn btn-peligro" (click)="eliminar(c)" [disabled]="eliminando()">Eliminar</button></td></tr>
+      <tr><td>{{ c.dni }}</td><td>{{ c.nombres }}</td><td>{{ c.apellidos }}</td><td>{{ c.email }}</td><td>{{ c.telefono ?? '—' }}</td><td>{{ c.direccion ?? '—' }}</td><td><span class="badge" [class.inactivo]="!c.estado">{{ c.estado ? 'Activo' : 'Inactivo' }}</span></td><td *appSiPermiso="'CLIENTES_ESCRIBIR'" class="actions"><a class="btn" [routerLink]="[c.id, 'editar']">Editar</a><button class="btn btn-peligro" (click)="eliminar(c)" [disabled]="eliminando()">Eliminar</button></td></tr>
     } @empty { <tr><td colspan="8">No hay clientes para mostrar.</td></tr> }
   </tbody></table></div>
 }

@@ -1,3 +1,4 @@
+import { SiPermiso } from '../../../../shared/directives/si-permiso';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -7,7 +8,7 @@ import { CategoriaService } from '../../services/categoria-service';
 
 @Component({
   selector: 'app-categoria-list',
-  imports: [RouterLink],
+  imports: [SiPermiso, RouterLink],
   templateUrl: './categoria-list.html',
   styleUrl: './categoria-list.css',
 })

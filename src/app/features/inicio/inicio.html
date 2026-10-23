@@ -2,27 +2,27 @@
   <h2>Bienvenido a PharmaSoft</h2>
   <p>Administre el catálogo, los clientes y las ventas de la botica.</p>
   <div class="module-grid">
-    <a class="module-card" routerLink="/categorias"
+    <a class="module-card" *appSiPermiso="'CATALOGO_LEER'" routerLink="/categorias"
       ><h3>Categorías</h3>
       <p>Organizar el catálogo de productos.</p></a
     >
-    <a class="module-card" routerLink="/clientes"
+    <a class="module-card" *appSiPermiso="'CLIENTES_LEER'" routerLink="/clientes"
       ><h3>Clientes</h3>
       <p>Administrar datos personales y contacto.</p></a
     >
-    <a class="module-card" routerLink="/productos"
+    <a class="module-card" *appSiPermiso="'CATALOGO_LEER'" routerLink="/productos"
       ><h3>Productos</h3>
       <p>Consultar precios, categorías y stock.</p></a
     >
-    <a class="module-card" routerLink="/ventas/nueva"
+    <a class="module-card" *appSiPermiso="'VENTAS_REGISTRAR'" routerLink="/ventas/nueva"
       ><h3>Nueva venta</h3>
       <p>Elegir cliente y productos, revisar y confirmar.</p></a
     >
-    <a class="module-card" routerLink="/ventas"
+    <a class="module-card" *appSiPermiso="'VENTAS_LEER'" routerLink="/ventas"
       ><h3>Consulta de ventas</h3>
       <p>Buscar ventas y obtener sus comprobantes.</p></a
     >
-    <a class="module-card" routerLink="/reportes"
+    <a class="module-card" *appSiPermiso="'REPORTES_VER'" routerLink="/reportes"
       ><h3>Ventas por categoría</h3>
       <p>Consultar unidades y montos vendidos.</p></a
     >
